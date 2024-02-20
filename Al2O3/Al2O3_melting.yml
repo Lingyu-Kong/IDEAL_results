@@ -16,7 +16,7 @@ misc:
     device: cuda
 DFT:
     mode: sync 
-    struct_input: POSCAR
+    struct_input: POSCAR.vasp
     dft_engine: vasp # espresso or emt
     njobs: 4
     dft_cmd: "OMP_NUM_THREADS=1 mpirun --use-hwthread-cpus -np 4 vasp_std"

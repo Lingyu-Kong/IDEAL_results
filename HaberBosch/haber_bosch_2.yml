@@ -1,0 +1,91 @@
+misc:
+    run_name: Haber_Bosch
+    system: IrNH
+    species:
+        - Ir
+        - N
+    blob_path: ../../contents/data_al
+    sample_test: False
+    warmup_data: labeled_init.xyz
+    use_pretrain: True
+    potential_name: potential.pth
+    save_path: .
+    save_checkpoint: True
+    wandb: False
+    seed: 42
+    device: cuda
+DFT:
+    mode: sync 
+    struct_input: POSCAR
+    dft_engine: vasp # espresso or emt
+    njobs: 4
+    dft_cmd: "OMP_NUM_THREADS=1 mpirun --use-hwthread-cpus -np 4 vasp_gam"
+    slurm:
+        use_slurm: False
+    vasp_parameters:
+        user_kpoints_settings:
+            reciprocal_density: 1
+data:
+    batch_size: 64
+    only_inference: False
+    num_workers: 0
+MLFF:
+    type: M3Gnet
+    lr: 1e-4    # learning rate
+    cutoff: 5.0 # float
+    threebody_cutoff: 4.0
+    num_blocks: 4 # int
+    units: 128 # int
+    smooth: True # bool
+    epochs: 50
+    max_n: 4
+    max_l: 4
+    n_jobs: 32
+    num_rs: 2000
+    cut_scan_granularity: 5
+    num_process: 16
+    max_steps: 200
+    include_forces: True
+    include_stresses: False
+    force_loss_ratio: 1.0
+    stress_loss_ratio: 0.1
+    early_stop: True
+    early_stop_patience: 50
+    scale_key: per_species_forces_rms
+    shift_key: per_species_energy_mean_linear_reg
+    trainable_scale: True
+    trainable_shift: True
+    scheduler_step_size: 10
+    scheduler_gamma: 0.95
+    delta: 0.1
+    is_patience: 200
+    is_p_ratio:
+        - 1.0
+        - 1.0
+        - 0.1
+    is_sample_size: 64
+active_learning:
+    cut_strategy:
+        optimize_rate: 1e-2
+        sub_cutoff: 5.0
+        cubic_extend: 2.0
+        num_rs: 2000
+        num_process: 12
+        max_step: 200
+        unc_threshold: 120.0
+        unc_threshold_decay: 120.0
+        unc_threshold_min: 120.0
+        noise: 0.5
+        noise_interval: 20
+        noise_decay: 0.8
+        use_importance_sampling: True
+        use_rebuild: False
+        early_stop: True
+        early_stop_patience: 50
+MD:
+    steps:
+        - 100000
+    time_step: 0.5
+    temperature:
+        - 1200
+    seed: 1234

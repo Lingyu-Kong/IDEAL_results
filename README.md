@@ -9,6 +9,7 @@ Please note that some folders may be empty until the end of February 2024, as we
 The environment dependencies for this code repository are as follows:
 
 - ipykernel
+- ase
 - numpy
 - matplotlib
 - seaborn

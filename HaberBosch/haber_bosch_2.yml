@@ -1,10 +1,10 @@
 misc:
     run_name: Haber_Bosch
-    system: IrNH
+    system: IrNH2
     species:
         - Ir
         - N
-    blob_path: ../../contents/data_al
+    blob_path: ./ # to run the code, the path should be changed to the correct parent directory path of the init/ folder
     sample_test: False
     warmup_data: labeled_init.xyz
     use_pretrain: True
